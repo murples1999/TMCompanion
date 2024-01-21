@@ -1,4 +1,8 @@
 # TMCompanion
+#### Video Demo:  <https://youtu.be/YbhonZlq-MYE>
+#### Description: Companion App for Terraforming Mars
+
+# TMCompanion
 This is a Web-App Companion for the popular board game Terraforming Mars
 
 # Goals
