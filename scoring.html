@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Scoring Page - TMCompanion</title>
+</head>
+<body>
+<nav class="container-fluid">
+        <ul>
+            <li><strong>TMCompanion</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#resource-tracker">Resource / Production Tracker</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="grid">
+            <section>
+                <hgroup>
+                    <h2>Scoring Page</h2>
+                    <h3>Calculate the Final Scores</h3>
+                </hgroup>
+                <form>
+                    <label>Number of Players:</label>
+                    <input type="number" min="2" max="4" placeholder="2-4 Players" />
+                    <div class="grid">
+                        <div>
+                            <label>Player 1 Score:</label>
+                            <input type="number" placeholder="TR" />
+                            <input type="number" placeholder="Awards" />
+                            <input type="number" placeholder="Milestones" />
+                            <input type="number" placeholder="Game Board" />
+                            <input type="number" placeholder="Cards" />
+                        </div>
+                        <!-- Repeat for each player -->
+                    </div>
+                    <button type="button">Submit Scores</button>
+                </form>
+            </section>
+        </div>
+    </main>
+    <footer class="container">
+        <small>
+            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
+        </small>
+    </footer>
+</body>
+</html>
