@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Terraforming Mars Companion App</title>
+</head>
+<body>
+<nav class="container-fluid">
+        <ul>
+            <li><strong>TMCompanion</strong></li>
+        </ul>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/megacredit-calculator">Megacredit Calculator</a></li>
+            <li><a href="/resource-tracker">Resource / Production Tracker</a></li>
+            <li><a href="/scoring">Scoring Page</a></li>
+            <li><a href="/player-reference">Player Reference Card</a></li>
+            <li><a href="/rule-book">Rule Book</a></li>
+            <li><button onclick="resetGame()" role="button">Reset Game</button></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="grid">
+            <section>
+                {% block content %}
+                {% endblock %}
+            </section>
+        </div>
+    </main>
+    <script>
+        function resetGame() {
+            if (confirm('Are you sure you want to reset the game? This will clear all stored data.')) {
+                localStorage.clear();
+                // Redirect to home page or refresh page
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>

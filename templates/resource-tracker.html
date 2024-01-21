@@ -1,73 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <title>Resource / Production Tracker - TMCompanion</title>
-</head>
-<body>
-<nav class="container-fluid">
-        <ul>
-            <li><strong>TMCompanion</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#megacredit-calculator">Megacredit Calculator</a></li>
-        </ul>
-    </nav>
-    <main class="container">
-        <div class="grid">
-            <section>
-                <hgroup>
-                    <h2>Resource / Production Tracker</h2>
-                    <h3>Manage Your Resources and Productions</h3>
-                </hgroup>
-                <div class="grid">
-                    <div>
-                        <label>Terraform Rating:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                    <div>
-                        <label>MegaCredits:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                    <div>
-                        <label>Steel:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                    <div>
-                        <label>Titanium:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                    <div>
-                        <label>Plants:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                    <div>
-                        <label>Energy:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                    <div>
-                        <label>Heat:</label>
-                        <input type="number" placeholder="Amount" />
-                        <input type="number" placeholder="Production" />
-                    </div>
-                </div>
-                <button type="button">Production Phase</button>
-            </section>
+{% extends "layout.html" %}
+{% block content %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeResources();
+
+            document.getElementById("production-phase-btn").addEventListener("click", function() {
+                productionPhase();
+            });
+        });
+
+        function initializeResources() {
+            if (localStorage.getItem("tr") === null) {
+                localStorage.setItem("tr", 0);
+            }
+            document.getElementById("tr-amount").value = localStorage.getItem("tr");
+
+            const resources = ["megacredits", "steel", "titanium", "plants", "energy", "heat"];
+            resources.forEach(resource => {
+                if (localStorage.getItem(resource) === null) {
+                    localStorage.setItem(resource, 0);
+                }
+                if (localStorage.getItem(resource + "-production") === null) {
+                    localStorage.setItem(resource + "-production", 0);
+                }
+
+                document.getElementById(resource + "-amount").value = localStorage.getItem(resource);
+                document.getElementById(resource + "-production").value = localStorage.getItem(resource + "-production");
+            });
+        }
+
+        function setResource(resource) {
+            if (resource === "tr") {
+                const amount = parseInt(document.getElementById("tr-amount").value, 10);
+                localStorage.setItem("tr", amount);
+            } else {
+                const amount = parseInt(document.getElementById(resource + "-amount").value, 10);
+                const production = parseInt(document.getElementById(resource + "-production").value, 10);
+                localStorage.setItem(resource, amount);
+                localStorage.setItem(resource + "-production", production);
+            }
+        }
+
+        function productionPhase() {
+            // Retrieve current resource values
+            const tr = parseInt(localStorage.getItem("tr"), 10);
+            const megacredits = parseInt(localStorage.getItem("megacredits"), 10);
+            const steel = parseInt(localStorage.getItem("steel"), 10);
+            const titanium = parseInt(localStorage.getItem("titanium"), 10);
+            const plants = parseInt(localStorage.getItem("plants"), 10);
+            const energy = parseInt(localStorage.getItem("energy"), 10);
+            const heat = parseInt(localStorage.getItem("heat"), 10);
+
+            // Retrieve production values
+            const megacreditsProduction = parseInt(localStorage.getItem("megacredits-production"), 10);
+            const steelProduction = parseInt(localStorage.getItem("steel-production"), 10);
+            const titaniumProduction = parseInt(localStorage.getItem("titanium-production"), 10);
+            const plantsProduction = parseInt(localStorage.getItem("plants-production"), 10);
+            const energyProduction = parseInt(localStorage.getItem("energy-production"), 10);
+            const heatProduction = parseInt(localStorage.getItem("heat-production"), 10);
+
+            // Convert all energy to heat
+            localStorage.setItem("heat", heat + energy + heatProduction);
+            localStorage.setItem("energy", energyProduction);
+
+            // Update other resources
+            localStorage.setItem("megacredits", megacredits + tr + megacreditsProduction);
+            localStorage.setItem("steel", steel + steelProduction);
+            localStorage.setItem("titanium", titanium + titaniumProduction);
+            localStorage.setItem("plants", plants + plantsProduction);
+
+            // Update displayed values (if applicable)
+            updateDisplayedValues();
+        }
+
+        function updateDisplayedValues() {
+            // Update the displayed values of resources on the page
+            document.getElementById("heat-amount").value = localStorage.getItem("heat");
+            document.getElementById("energy-amount").value = localStorage.getItem("energy");
+            document.getElementById("megacredits-amount").value = localStorage.getItem("megacredits");
+            document.getElementById("steel-amount").value = localStorage.getItem("steel");
+            document.getElementById("titanium-amount").value = localStorage.getItem("titanium");
+            document.getElementById("plants-amount").value = localStorage.getItem("plants");
+            // Add similar lines for other resources
+        }
+    </script>
+
+    <hgroup>
+        <h2>Resource / Production Tracker</h2>
+        <h3>Manage Your Resources and Productions</h3>
+    </hgroup>
+    <div class="grid">
+        <div>
+            <label>TR:</label>
+            <input type="number" id="tr-amount" placeholder="Amount" />
+            <button onclick="setResource('tr')">Set</button>
         </div>
-    </main>
-    <footer class="container">
-        <small>
-            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
-        </small>
-    </footer>
-</body>
-</html>
+        <div>
+            <label>MegaCredits:</label>
+            <input type="number" id="megacredits-amount" placeholder="Amount" />
+            <input type="number" id="megacredits-production" placeholder="Production" />
+            <button onclick="setResource('megacredits')">Set</button>
+        </div>
+        <div>
+            <label>Steel:</label>
+            <input type="number" id="steel-amount" placeholder="Amount" />
+            <input type="number" id="steel-production" placeholder="Production" />
+            <button onclick="setResource('steel')">Set</button>
+        </div>
+        <div>
+            <label>Titanium:</label>
+            <input type="number" id="titanium-amount" placeholder="Amount" />
+            <input type="number" id="titanium-production" placeholder="Production" />
+            <button onclick="setResource('titanium')">Set</button>
+        </div>
+        <div>
+            <label>Plants:</label>
+            <input type="number" id="plants-amount" placeholder="Amount" />
+            <input type="number" id="plants-production" placeholder="Production" />
+            <button onclick="setResource('plants')">Set</button>
+        </div>
+        <div>
+            <label>Energy:</label>
+            <input type="number" id="energy-amount" placeholder="Amount" />
+            <input type="number" id="energy-production" placeholder="Production" />
+            <button onclick="setResource('energy')">Set</button>
+        </div>
+        <div>
+            <label>Heat:</label>
+            <input type="number" id="heat-amount" placeholder="Amount" />
+            <input type="number" id="heat-production" placeholder="Production" />
+            <button onclick="setResource('heat')">Set</button>
+        </div>
+    </div>
+    <button type="button" id="production-phase-btn">Production Phase</button>
+{% endblock %}

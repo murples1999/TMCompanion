@@ -1,51 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <title>Scoring Page - TMCompanion</title>
-</head>
-<body>
-<nav class="container-fluid">
-        <ul>
-            <li><strong>TMCompanion</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#resource-tracker">Resource / Production Tracker</a></li>
-        </ul>
-    </nav>
-    <main class="container">
-        <div class="grid">
-            <section>
-                <hgroup>
-                    <h2>Scoring Page</h2>
-                    <h3>Calculate the Final Scores</h3>
-                </hgroup>
-                <form>
-                    <label>Number of Players:</label>
-                    <input type="number" min="2" max="4" placeholder="2-4 Players" />
-                    <div class="grid">
-                        <div>
-                            <label>Player 1 Score:</label>
-                            <input type="number" placeholder="TR" />
-                            <input type="number" placeholder="Awards" />
-                            <input type="number" placeholder="Milestones" />
-                            <input type="number" placeholder="Game Board" />
-                            <input type="number" placeholder="Cards" />
-                        </div>
-                        <!-- Repeat for each player -->
-                    </div>
-                    <button type="button">Submit Scores</button>
-                </form>
-            </section>
+{% extends "layout.html" %}
+{% block content %}
+    <script>
+        function generatePlayerForms() {
+            var playerCount = parseInt(document.getElementById('player-count').value, 10);
+            var playerFormsContainer = document.getElementById('player-forms-container');
+            playerFormsContainer.innerHTML = ''; // Clear existing forms
+
+            for (var i = 1; i <= playerCount; i++) {
+                var formHtml = '<div>' +
+                    '<label>Player ' + i + ' Score:</label>' +
+                    '<input type="number" id="tr-player-' + i + '" placeholder="TR" />' +
+                    '<input type="number" id="awards-player-' + i + '" placeholder="Awards" />' +
+                    '<input type="number" id="milestones-player-' + i + '" placeholder="Milestones" />' +
+                    '<input type="number" id="gameboard-player-' + i + '" placeholder="Game Board" />' +
+                    '<input type="number" id="cards-player-' + i + '" placeholder="Cards" />' +
+                    '</div>';
+                playerFormsContainer.innerHTML += formHtml;
+            }
+        }
+
+        function submitScores() {
+            var playerCount = parseInt(document.getElementById('player-count').value, 10);
+            var scores = [];
+            for (var i = 1; i <= playerCount; i++) {
+                var score = parseInt(document.getElementById('tr-player-' + i).value, 10) +
+                    parseInt(document.getElementById('awards-player-' + i).value, 10) +
+                    parseInt(document.getElementById('milestones-player-' + i).value, 10) +
+                    parseInt(document.getElementById('gameboard-player-' + i).value, 10) +
+                    parseInt(document.getElementById('cards-player-' + i).value, 10);
+                scores.push({ player: 'Player ' + i, score: score });
+            }
+
+            // Sort players by score in descending order
+            scores.sort(function(a, b) { return b.score - a.score; });
+
+            // Determine winner or tie
+            var resultMessage;
+            if (scores[0].score === scores[1].score) { // Check for tie
+                var tiedPlayers = scores.filter(s => s.score === scores[0].score)
+                                        .map(s => s.player)
+                                        .join(", ");
+                resultMessage = tiedPlayers + " Tied!";
+            } else {
+                resultMessage = scores[0].player + " Wins!";
+            }
+
+            // Display result
+            document.getElementById("result-display").textContent = resultMessage;
+        }
+
+    </script>
+    <hgroup>
+        <h2>Scoring Page</h2>
+        <h3>Calculate the Final Scores</h3>
+    </hgroup>
+    <form>
+        <label>Number of Players:</label>
+        <input type="number" id="player-count" min="2" max="4" placeholder="2-4 Players" onchange="generatePlayerForms()" />
+        <div id="player-forms-container">
+            <!-- Player score forms will be inserted here -->
         </div>
-    </main>
-    <footer class="container">
-        <small>
-            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
-        </small>
-    </footer>
-</body>
-</html>
+        <button type="button" onclick="submitScores()">Submit Scores</button>
+        <div id="result-display"></div>
+    </form>
+{% endblock %}
+

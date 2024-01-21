@@ -1,71 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <title>Terraforming Mars Companion App</title>
-</head>
-<body>
-<nav class="container-fluid">
-        <ul>
-            <li><strong>TMCompanion</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#megacredit-calculator">Megacredit Calculator</a></li>
-            <li><a href="#resource-tracker">Resource / Production Tracker</a></li>
-            <li><a href="#scoring">Scoring Page</a></li>
-            <li><a href="#player-reference">Player Reference Card</a></li>
-            <li><a href="#rule-book">Rule Book</a></li>
-            <li><a href="#" role="button">Reset Game</a></li>
-        </ul>
-    </nav>
-    <main class="container">
-        <div class="grid">
-            <section>
-                <hgroup>
-                    <h2>Welcome to TMCompanion</h2>
-                    <h3>Your Ultimate Terraforming Mars Web-App Companion</h3>
-                </hgroup>
-                <p>Explore the various features designed to enhance your Terraforming Mars gaming experience.</p>
-                <figure>
-                    <img src="https://source.unsplash.com/random/800x600?mars" alt="Terraforming Mars Image" />
-                    <figcaption>Image Credit: Unsplash</figcaption>
-                </figure>
-                <h3>Megacredit Tracker</h3>
-                <p>Displayed at the top center across all pages.</p>
-                <h3>Megacredit Calculator</h3>
-                <p>A detailed page for managing your Megacredits with an interactive calculator.</p>
-                <h3>Resource / Production Tracker</h3>
-                <p>Track and manage all your resources and productions.</p>
-                <h3>Scoring Page</h3>
-                <p>Handle the scoring for each player and determine the winner with ease.</p>
-                <h3>Player Reference Card</h3>
-                <p>Quick access to rules and iconography for your reference.</p>
-                <h3>Rule Book</h3>
-                <p>Access the complete rule book in a reader-friendly format.</p>
-            </section>
-        </div>
-    </main>
-    <section aria-label="Subscribe example">
-        <div class="container">
-            <article>
-                <hgroup>
-                    <h2>Stay Updated</h2>
-                    <h3>Subscribe for latest updates</h3>
-                </hgroup>
-                <form class="grid">
-                    <input type="text" id="firstname" name="firstname" placeholder="First Name" aria-label="First Name" required />
-                    <input type="email" id="email" name="email" placeholder="Email" aria-label="Email" required />
-                    <button type="submit" onclick="event.preventDefault()">Subscribe</button>
-                </form>
-            </article>
-        </div>
-    </section>
-    <footer class="container">
-        <small>
-            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
-        </small>
-    </footer>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+    <hgroup>
+        <h2>Welcome to TMCompanion</h2>
+        <h3>Your Ultimate Terraforming Mars Web-App Companion</h3>
+    </hgroup>
+    <p>Explore the various features designed to enhance your Terraforming Mars gaming experience.</p>
+    <figure>
+        <img src="https://source.unsplash.com/random/800x600?mars" alt="Terraforming Mars Image" />
+        <figcaption>Image Credit: Unsplash</figcaption>
+    </figure>
+{% endblock %}

@@ -1,42 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <title>Player Reference Card - TMCompanion</title>
-</head>
-<body>
-<nav class="container-fluid">
-        <ul>
-            <li><strong>TMCompanion</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#scoring-page">Scoring Page</a></li>
-        </ul>
-    </nav>
-    <main class="container">
-        <div class="grid">
-            <section>
-                <hgroup>
-                    <h2>Player Reference Card</h2>
-                    <h3>Quick Rules and Iconography Guide</h3>
-                </hgroup>
-                <p>Here's a quick reference guide to the rules and symbols used in Terraforming Mars.</p>
-                <ul>
-                    <li><strong>Symbol 1:</strong> Description of Symbol 1.</li>
-                    <li><strong>Symbol 2:</strong> Description of Symbol 2.</li>
-                    <li><strong>Symbol 3:</strong> Description of Symbol 3.</li>
-                    <!-- More symbols and their descriptions -->
-                </ul>
-            </section>
-        </div>
-    </main>
-    <footer class="container">
-        <small>
-            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
-        </small>
-    </footer>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+    <hgroup>
+        <h2>Player Reference Card</h2>
+        <h3>Quick Rules and Iconography Guide</h3>
+    </hgroup>
+    <p>Here's a quick reference guide to the rules and symbols used in Terraforming Mars.</p>
+    <div>
+        <img src="{{ url_for('static', filename='images/page_1.png') }}" alt="Page 1">
+        <img src="{{ url_for('static', filename='images/page_2.png') }}" alt="Page 2">        
+    </div>
+{% endblock %}
+
+
